@@ -83,7 +83,7 @@ export default class Tree {
     return node;
   }
 
-  levelOrder(callback) {
+  levelOrderIteration(callback) {
     let queue = [];
     queue.push(this.root);
 

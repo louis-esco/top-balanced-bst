@@ -3,8 +3,6 @@ import Node from "./node.js";
 export default class Tree {
   constructor(array) {
     const sortedArray = [...new Set(array)].sort((a, b) => a - b);
-    console.log(sortedArray);
-    console.log(sortedArray.length);
     this.root = this.buildTree(sortedArray);
   }
 
@@ -16,7 +14,7 @@ export default class Tree {
     const mid = Math.floor(array.length / 2);
     const root = array[mid];
     const left = array.slice(0, mid);
-    const right = array.slice(mid + 1, array.length - 1);
+    const right = array.slice(mid + 1, array.length);
 
     const node = new Node(root, this.buildTree(left), this.buildTree(right));
 
@@ -58,10 +56,10 @@ export default class Tree {
         while (closestNode.left !== null) {
           closestNode = closestNode.left;
         }
-        // Plug the node to its right to the following node
+        // Deletes closest node and creates new links
         node.right = this.deleteItem(closestNode.data, node.right);
-        // Return closest node data with deleted node links
-        return new Node(closestNode.data, node.left, node.right);
+        // Updates node data with closest node data
+        node.data = closestNode.data;
       }
     }
     return node;

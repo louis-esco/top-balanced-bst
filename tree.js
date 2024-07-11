@@ -2,7 +2,7 @@ import Node from "./node.js";
 
 export default class Tree {
   constructor(array) {
-    const sortedArray = [...new Set(array)].sort();
+    const sortedArray = [...new Set(array)].sort((a, b) => a - b);
     this.root = this.buildTree(sortedArray);
   }
 
@@ -20,6 +20,20 @@ export default class Tree {
     const node = new Node(root, this.buildTree(left), this.buildTree(right));
 
     return node;
+  }
+
+  insert(value, root = this.root) {
+    if (root === null) {
+      root = new Node(value);
+      return root;
+    }
+
+    if (value < root.data) {
+      root.left = this.insert(value, root.left);
+    } else if (value > root.data) {
+      root.right = this.insert(value, root.right);
+    }
+    return root;
   }
 
   prettyPrint(node, prefix = "", isLeft = true) {

@@ -67,7 +67,8 @@ export default class Tree {
 
   find(value, node = this.root) {
     if (!node) {
-      throw new Error("Value not found in the tree");
+      console.log("Value not found in the tree");
+      return;
     }
 
     if (value === node.data) {
@@ -80,6 +81,19 @@ export default class Tree {
       node = this.find(value, node.right);
     }
     return node;
+  }
+
+  levelOrder(callback) {
+    let queue = [];
+    queue.push(this.root);
+
+    while (queue.length > 0) {
+      let node = queue[0];
+      callback(node);
+      if (node.left !== null) queue.push(node.left);
+      if (node.right !== null) queue.push(node.right);
+      queue.shift();
+    }
   }
 
   prettyPrint(node, prefix = "", isLeft = true) {

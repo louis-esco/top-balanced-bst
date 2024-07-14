@@ -85,16 +85,24 @@ export default class Tree {
 
   levelOrderIteration(callback) {
     let queue = [];
+    let values = [];
     queue.push(this.root);
 
     while (queue.length > 0) {
       let node = queue[0];
-      callback(node);
+      if (!callback) {
+        values.push(node.data);
+      } else {
+        callback(node);
+      }
       if (node.left !== null) queue.push(node.left);
       if (node.right !== null) queue.push(node.right);
       queue.shift();
     }
+    return values;
   }
+
+  inOrder(callback) {}
 
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {

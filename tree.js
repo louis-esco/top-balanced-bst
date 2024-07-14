@@ -102,7 +102,20 @@ export default class Tree {
     return values;
   }
 
-  inOrder(callback) {}
+  inOrder(callback, node = this.root) {
+    if (node === null) return [];
+    if (!callback) {
+      return [
+        ...this.inOrder(callback, node.left),
+        node.data,
+        ...this.inOrder(callback, node.right),
+      ];
+    } else {
+      this.inOrder(callback, node.left);
+      callback(node);
+      this.inOrder(callback, node.right);
+    }
+  }
 
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {

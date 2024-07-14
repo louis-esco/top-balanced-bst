@@ -132,6 +132,21 @@ export default class Tree {
     }
   }
 
+  postOrder(callback, node = this.root) {
+    if (node === null) return [];
+    if (!callback) {
+      return [
+        ...this.postOrder(callback, node.left),
+        ...this.postOrder(callback, node.right),
+        node.data,
+      ];
+    } else {
+      this.postOrder(callback, node.left);
+      this.postOrder(callback, node.right);
+      callback(node);
+    }
+  }
+
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;

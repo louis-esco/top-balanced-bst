@@ -147,6 +147,33 @@ export default class Tree {
     }
   }
 
+  height(node = this.root) {
+    if (node === null) return 0;
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+
+  depth(node, root = this.root) {
+    if (!root) {
+      console.log("Value not found in the tree");
+      return;
+    }
+
+    let depth = 0;
+
+    if (node.data === root.data) {
+      return depth + 1;
+    }
+
+    if (node.data < root.data) {
+      depth = this.depth(node, root.left);
+    } else {
+      depth = this.depth(node, root.right);
+    }
+    return depth + 1;
+  }
+
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;

@@ -174,6 +174,25 @@ export default class Tree {
     return depth + 1;
   }
 
+  heightDiff(node) {
+    if (node === null) return 0;
+    return Math.abs(this.height(node.left) - this.height(node.right));
+  }
+
+  isBalanced(node = this.root) {
+    if (node === null) return true;
+    const leftBalanced = this.isBalanced(node.left);
+    const rightBalanced = this.isBalanced(node.right);
+    const nodeBalanced = this.heightDiff(node) <= 1;
+    return leftBalanced && rightBalanced && nodeBalanced;
+  }
+
+  rebalance() {
+    const values = this.levelOrderIteration();
+    const sortedValues = [...new Set(values)].sort((a, b) => a - b);
+    this.root = this.buildTree(sortedValues);
+  }
+
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
